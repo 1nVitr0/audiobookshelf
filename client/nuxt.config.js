@@ -1,6 +1,8 @@
+const { defineNuxtConfig } = require('@nuxt/bridge')
+const path = require('path')
 const pkg = require('./package.json')
 
-module.exports = ({ command }) => ({
+module.exports = defineNuxtConfig({
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
   target: 'server',
@@ -11,9 +13,11 @@ module.exports = ({ command }) => ({
   },
   telemetry: false,
 
-  publicRuntimeConfig: {
-    version: pkg.version,
-    routerBasePath: process.env.ROUTER_BASE_PATH || ''
+  runtimeConfig: {
+    public: {
+      version: pkg.version,
+      routerBasePath: process.env.ROUTER_BASE_PATH || ''
+    }
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -31,7 +35,7 @@ module.exports = ({ command }) => ({
 
   router: {
     // We must specify `./` during build to support dynamic router base paths (https://github.com/nuxt/nuxt/issues/10088)
-    base: command == 'build' ? './' : process.env.ROUTER_BASE_PATH || ''
+    base: process.env.ROUTER_BASE_PATH || ''
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -153,6 +157,12 @@ module.exports = ({ command }) => ({
   server: {
     port: process.env.NODE_ENV === 'production' ? 80 : 3000,
     host: '0.0.0.0'
+  },
+
+  bridge: {
+    capi: false,
+    scriptSetup: false,
+    transpile: false,
   },
 
   /**
