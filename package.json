@@ -19,18 +19,21 @@
   "bin": "prod.js",
   "pkg": {
     "assets": [
-      "client/.nuxt/**/*",
-      "client/node_modules/**/*",
+      "client/.output/server/index.js",
+      "client/.output/public/**/*",
       "client/nuxt.config.js",
-      "client/package.json",
-      "client/modules/**/*",
-      "client/static/**/*",
       "server/Db.js"
     ],
     "scripts": [
       "prod.js",
-      "server/**/*.js"
-    ]
+      "server/**/*.js",
+      "client/.output/server/index.js"
+    ],
+    "patches": {
+      "./client/.output/server/index.mjs": [
+        "fn = (await realImport(workerData.filename.replace(/file:\\/\\/\\/?/, ''))).default"
+      ]
+    }
   },
   "author": "advplyr",
   "license": "GPL-3.0",

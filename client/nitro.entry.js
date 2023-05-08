@@ -1,8 +1,8 @@
 import '#internal/nitro/virtual/polyfill'
 
-const nitroApp = useNitroApp()
-const listener = toNodeListener(nitroApp.h3App)
-const handler = listener
+var nitroApp = useNitroApp()
+var listener = toNodeListener(nitroApp.h3App)
+var handler = listener
 {
   process.on(
     "unhandledRejection",
